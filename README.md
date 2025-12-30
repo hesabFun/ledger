@@ -67,12 +67,6 @@ go mod download
 make install-tools
 ```
 
-4. Set up the database:
-```bash
-cd db-schema
-docker compose up
-```
-
 5. Generate Protocol Buffer code:
 ```bash
 make proto
