@@ -1,3 +1,6 @@
 [submodule "db-schema"]
 	path = db-schema
 	url = git@github.com:hesabFun/PostgreSQL-Core-Ledger.git
+[submodule "proto"]
+	path = proto
+	url = git@github.com:hesabFun/proto.git
