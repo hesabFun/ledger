@@ -9,7 +9,7 @@ import (
 
 // TenantRepositoryInterface defines methods for tenant operations
 type TenantRepositoryInterface interface {
-	Create(ctx context.Context, name string) (*Tenant, error)
+	Create(ctx context.Context, name string, tenantUUID *uuid.UUID) (*Tenant, error)
 	GetByID(ctx context.Context, tenantID uuid.UUID) (*Tenant, error)
 	GetByName(ctx context.Context, name string) (*Tenant, error)
 }

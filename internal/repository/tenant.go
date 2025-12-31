@@ -28,11 +28,11 @@ func NewTenantRepository(database *db.DB) *TenantRepository {
 }
 
 // Create creates a new tenant using the database function
-func (r *TenantRepository) Create(ctx context.Context, name string) (*Tenant, error) {
+func (r *TenantRepository) Create(ctx context.Context, name string, tenantUUID *uuid.UUID) (*Tenant, error) {
 	var tenantID uuid.UUID
 
-	query := "SELECT create_tenant($1)"
-	err := r.db.Pool().QueryRow(ctx, query, name).Scan(&tenantID)
+	query := "SELECT create_tenant($1, $2)"
+	err := r.db.Pool().QueryRow(ctx, query, name, tenantUUID).Scan(&tenantID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create tenant: %w", err)
 	}

@@ -67,7 +67,7 @@ func (s *IntegrationTestSuite) TearDownSuite() {
 // SetupTest runs before each test
 func (s *IntegrationTestSuite) SetupTest() {
 	// Create a test tenant for each test
-	tenant, err := s.tenantRepo.Create(context.Background(), "test-tenant-"+uuid.New().String())
+	tenant, err := s.tenantRepo.Create(context.Background(), "test-tenant-"+uuid.New().String(), nil)
 	require.NoError(s.T(), err)
 	s.testTenantID = tenant.ID
 }
@@ -85,7 +85,7 @@ func (s *IntegrationTestSuite) TearDownTest() {
 func (s *IntegrationTestSuite) TestTenantRepository_Create() {
 	ctx := context.Background()
 
-	tenant, err := s.tenantRepo.Create(ctx, "integration-test-tenant")
+	tenant, err := s.tenantRepo.Create(ctx, "integration-test-tenant", nil)
 	require.NoError(s.T(), err)
 	require.NotNil(s.T(), tenant)
 

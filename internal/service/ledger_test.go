@@ -20,8 +20,8 @@ type MockTenantRepository struct {
 	mock.Mock
 }
 
-func (m *MockTenantRepository) Create(ctx context.Context, name string) (*repository.Tenant, error) {
-	args := m.Called(ctx, name)
+func (m *MockTenantRepository) Create(ctx context.Context, name string, tenantUUID *uuid.UUID) (*repository.Tenant, error) {
+	args := m.Called(ctx, name, tenantUUID)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -138,7 +138,7 @@ func TestLedgerService_CreateTenant(t *testing.T) {
 		tenantID := uuid.New()
 		now := time.Now()
 
-		mockTenantRepo.On("Create", ctx, "Test Tenant").Return(&repository.Tenant{
+		mockTenantRepo.On("Create", ctx, "Test Tenant", (*uuid.UUID)(nil)).Return(&repository.Tenant{
 			ID:        tenantID,
 			Name:      "Test Tenant",
 			CreatedAt: now,

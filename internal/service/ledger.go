@@ -45,7 +45,16 @@ func (s *LedgerService) CreateTenant(ctx context.Context, req *pb.CreateTenantRe
 		return nil, status.Error(codes.InvalidArgument, "tenant name is required")
 	}
 
-	tenant, err := s.tenantRepo.Create(ctx, req.Name)
+	var tenantUUID *uuid.UUID
+	if req.Uuid != nil && *req.Uuid != "" {
+		parsed, err := uuid.Parse(*req.Uuid)
+		if err != nil {
+			return nil, status.Error(codes.InvalidArgument, "invalid UUID format")
+		}
+		tenantUUID = &parsed
+	}
+
+	tenant, err := s.tenantRepo.Create(ctx, req.Name, tenantUUID)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to create tenant: %v", err)
 	}
